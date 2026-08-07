@@ -1,4 +1,4 @@
-| **RED TEAM EXPLOITATION GUIDE** |
+﻿| **RED TEAM EXPLOITATION GUIDE** |
 |---------------------------------|
 
 **Smart-Meter Wildcard Harvest**
@@ -199,7 +199,7 @@ Perform a focused scan against the expected MQTT port. The scan confirms reachab
 | nmap -n -Pn -sV -p 1883 "\$TARGET" |
 |------------------------------------|
 
-<img src=".\Red-Writeup-assets/media/image5.png" style="width:6.5in;height:2.49419in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image5.png" style="width:6.5in;height:2.49419in" />
 
 *Figure 1 - TCP/1883 was reachable and identified as MQTT from the participant Kali host.*
 
@@ -235,7 +235,7 @@ Before requesting the full grid hierarchy, test one known telemetry topic withou
 </tbody>
 </table>
 
-<img src=".\Red-Writeup-assets/media/image6.png" style="width:4.7in;height:4.3302in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image6.png" style="width:4.7in;height:4.3302in" />
 
 *Figure 2 - An unauthenticated subscription returned the identity value for meter M001.*
 
@@ -275,7 +275,7 @@ MQTT Topic Filters can include wildcard characters. The multi-level wildcard \# 
 </tbody>
 </table>
 
-<img src=".\Red-Writeup-assets/media/image7.png" style="width:6.4in;height:2.81362in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image7.png" style="width:6.4in;height:2.81362in" />
 
 *Figure 3 - One wildcard subscription exposed meter identities from zone1, zone2 and zone3.*
 
@@ -290,7 +290,7 @@ MQTT Topic Filters can include wildcard characters. The multi-level wildcard \# 
 | Meter ID        | M001 through M012                 |
 | Field           | id, feeder, load, voltage, outage |
 
-The 60-topic result follows directly from 3 zones × 4 meters per zone × 5 fields per meter. The broad subscription defeats the intended zone separation and exposes operational state across the entire hierarchy.
+The 60-topic result follows directly from 3 zones Ã— 4 meters per zone Ã— 5 fields per meter. The broad subscription defeats the intended zone separation and exposes operational state across the entire hierarchy.
 
 # **9. Phase 5 - Complete Python Exploit Source**
 
@@ -695,7 +695,7 @@ python3 wildcard_harvest.py \<br />
 </tbody>
 </table>
 
-<img src=".\Red-Writeup-assets/media/image8.png" style="width:6.5in;height:1.36544in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image8.png" style="width:6.5in;height:1.36544in" />
 
 *Figure 4 - The wildcard collector received 60 messages across three zones and 12 meters.*
 
@@ -753,7 +753,7 @@ PY</th>
 </tbody>
 </table>
 
-<img src=".\Red-Writeup-assets/media/image9.png" style="width:6in;height:1.94649in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image9.png" style="width:6in;height:1.94649in" />
 
 *Figure 5 - The participant result confirms 60 unique topics, three zones and 12 meters.*
 
@@ -794,7 +794,7 @@ PY</th>
 </tbody>
 </table>
 
-<img src=".\Red-Writeup-assets/media/image10.png" style="width:5.2in;height:1.76604in" />
+<img src="https://raw.githubusercontent.com/hacktify-uv/temp/main/Smart-Meter-Wildcard-Harvest/Red-Writeup-assets/media/image10.png" style="width:5.2in;height:1.76604in" />
 
 *Figure 6 - M010 in zone3 on FEEDER-SOUTH-A is the meter reporting an outage.*
 
@@ -940,3 +940,4 @@ The automated collector received 60 topics covering three zones and 12 smart met
 
 | Participant success principle: external MQTT access, accepted grid/# subscription, complete cross-zone collection and correct M010 outage identification must all be demonstrated from the participant side. |
 |----|
+
